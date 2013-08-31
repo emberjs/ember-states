@@ -7,9 +7,14 @@
   * `ember-states.js` and `ember-states.min.js`
 
 If you are building under Linux, you will need a JavaScript runtime for
-minification, for which we recommend installing nodejs.  Alternatively 
+minification, for which we recommend installing nodejs.  Alternatively
 you may have luck with another of the runtimes supported by
 [execjs](https://github.com/sstephenson/execjs).
+
+# Using
+
+Simply concatenate or include ember-states.js or ember-states.min.js after ember
+and you will have `Ember.StateManager` and `Ember.State` available for your use.
 
 # How to Run Unit Tests
 
