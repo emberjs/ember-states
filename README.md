@@ -1,4 +1,4 @@
-# Ember States
+# Ember States [![Build Status](https://travis-ci.org/emberjs/ember-states.png)](https://travis-ci.org/emberjs/ember-states)
 
 # Building
 
