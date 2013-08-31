@@ -1,0 +1,7 @@
+script: bundle exec rake test
+after_success: bundle exec rake publish_build
+env:
+  global:
+  - S3_BUCKET_NAME=builds.emberjs.com
+  - secure: XtgYs4ZYgy/GqKc8Dlj8Wk9IKQeGZbAl7aJZfAIYM+J+Br/ETogWGJJLbrSdONV412Ge3xK0DDMxpANhF3/XW5NzI8m5nY0vEEggOChZlK/s1h+v2u42LxLptuJUwrTCP24mhoWP7EQpp3BqnsTV2AFpITChvqcuKw1dt+wvUw4=
+  - secure: TcK0+7YaHp7ktG/JFLSxtMQyMvpYBC8Xwm3o9QTA6wQJj7FwWNXr5A47JkUNzKyRixI7tInxS2MgwtCZXbvrVJiKhCDzrXvt/cFKAA8aI6r0F7f/S5PN3470NQuOMa8hvFwG/y1mvzj4xNJ+7xluKxj6kfv9QpiAm24QLMWCpds=
