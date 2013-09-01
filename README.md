@@ -1,12 +1,12 @@
 # Ember States [![Build Status](https://travis-ci.org/emberjs/ember-states.png)](https://travis-ci.org/emberjs/ember-states)
 
-# Up and running in less than a minute
+## Up and running in less than a minute
 
 1. Download the [latest build](http://builds.emberjs.com/ember-states/latest/ember-states.js).
 2. In your application, include ember-states.js immediately after Ember.
 3. Enjoy!
 
-# Building
+## Building
 
 1. Run `bundle install` to fetch the necessary ruby gems.
 2. Run `rake dist` to build Ember.js. Two builds will be placed in the `dist/` directory.
@@ -17,9 +17,9 @@ minification, for which we recommend installing nodejs.  Alternatively
 you may have luck with another of the runtimes supported by
 [execjs](https://github.com/sstephenson/execjs).
 
-# How to Run Unit Tests
+## How to Run Unit Tests
 
-## Setup
+### Setup
 
 1. Install Ruby 1.9.3+. There are many resources on the web can help;
 one of the best is [rvm](https://rvm.io/).
@@ -28,13 +28,13 @@ one of the best is [rvm](https://rvm.io/).
 
 3. Run `bundle` inside the project root to install the gem dependencies.
 
-## In Your Browser
+### In Your Browser
 
 1. To start the development server, run `rackup`.
 
 2. Then visit: `http://localhost:9292/`
 
-## From the CLI
+### From the CLI
 
 1. Install phantomjs from http://phantomjs.org
 
