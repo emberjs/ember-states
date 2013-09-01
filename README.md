@@ -1,5 +1,11 @@
 # Ember States [![Build Status](https://travis-ci.org/emberjs/ember-states.png)](https://travis-ci.org/emberjs/ember-states)
 
+# Up and running in less than a minute
+
+1. Download the [latest build](http://builds.emberjs.com/ember-states/latest/ember-states.js).
+2. In your application, include ember-states.js immediately after Ember.
+3. Enjoy!
+
 # Building
 
 1. Run `bundle install` to fetch the necessary ruby gems.
@@ -10,11 +16,6 @@ If you are building under Linux, you will need a JavaScript runtime for
 minification, for which we recommend installing nodejs.  Alternatively
 you may have luck with another of the runtimes supported by
 [execjs](https://github.com/sstephenson/execjs).
-
-# Using
-
-Simply concatenate or include ember-states.js or ember-states.min.js after ember
-and you will have `Ember.StateManager` and `Ember.State` available for your use.
 
 # How to Run Unit Tests
 
