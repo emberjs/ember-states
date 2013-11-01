@@ -1,0 +1,13 @@
+{
+  "name": "The Ember States API",
+  "description": "The Ember States API: state machine built for Ember",
+  "version": "0.0.1",
+  "url": "",
+  "options": {
+    "paths": [
+      "../packages/ember-states/lib"
+    ],
+    "exclude": "vendor",
+    "outdir":   "./build"
+  }
+}
