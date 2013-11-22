@@ -5,7 +5,7 @@
   "url": "",
   "options": {
     "paths": [
-      "../packages/ember-states/lib"
+      "packages/ember-states/lib"
     ],
     "exclude": "vendor",
     "outdir":   "./build"
