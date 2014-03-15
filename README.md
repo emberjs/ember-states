@@ -1,5 +1,8 @@
 # Ember States [![Build Status](https://travis-ci.org/emberjs/ember-states.png)](https://travis-ci.org/emberjs/ember-states)
 
+Ember States is Ember's implementation of a finite state machine. A StateManager instance manages a number of properties that are instances of `Ember.State`, tracks the current active state, and triggers callbacks when states have changed.
+For more info check documentation of `Ember.StateManager` in [packages/ember-states/lib/state_manager.js](https://github.com/emberjs/ember-states/blob/master/packages/ember-states/lib/state_manager.js)
+
 ## Up and running in less than a minute
 
 1. Download the [latest build](http://builds.emberjs.com/ember-states/latest/ember-states.js).
