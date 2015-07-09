@@ -1,7 +1,0 @@
-{
-  "name": "ember-states-docs",
-  "version": "0.0.1",
-  "dependencies": {
-    "yuidoc": "git://github.com/wagenet/yuidoc.git"
-  }
-}
