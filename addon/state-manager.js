@@ -678,20 +678,19 @@ export default State.extend({
     @param path
     @param context
   */
-  transitionTo(path, context) {
+  transitionTo(path) {
     // XXX When is transitionTo called with no path
     if (Ember.isEmpty(path)) { return; }
 
     // The ES6 signature of this function is `path, ...contexts`
-    var contexts = context ? Array.prototype.slice.call(arguments, 1) : [],
-        currentState = get(this, 'currentState') || this;
+    let currentState = get(this, 'currentState') || this;
 
     // First, get the enter, exit and resolve states for the current state
     // and specified path. If possible, use an existing cache.
-    var hash = this.contextFreeTransition(currentState, path);
+    let hash = this.contextFreeTransition(currentState, path);
 
     // Next, process the raw state information for the contexts passed in.
-    var transition = new Transition(hash).normalize(this, contexts);
+    let transition = new Transition(hash).normalize(this);
 
     this.enterState(transition);
     this.triggerSetupContext(transition);
@@ -817,15 +816,11 @@ export default State.extend({
     @param transitions
   */
   triggerSetupContext(transitions) {
-    var contexts = transitions.contexts,
-        offset = transitions.enterStates.length - contexts.length,
-        enterStates = transitions.enterStates,
-        transitionEvent = get(this, 'transitionEvent');
+    let enterStates = transitions.enterStates;
+    let transitionEvent = get(this, 'transitionEvent');
 
-    Ember.assert("More contexts provided than states", offset >= 0);
-
-    forEach(enterStates, function(state, idx) {
-      state.trigger(transitionEvent, this, contexts[idx-offset]);
+    forEach(enterStates, function(state) {
+      state.trigger(transitionEvent, this);
     }, this);
   },
 

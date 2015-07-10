@@ -554,64 +554,9 @@ test("transitionTo with current state does not trigger enter or exit", (assert) 
   assert.equal(stateManager.grandparent.parent.child.exited, 0, "the final state should not be exited");
 });
 
-module("Transition contexts");
+module("Transition event");
 
-test("if a context is passed to a transition, the state's setup event is triggered after the transition has completed", (assert) => {
-  assert.expect(1);
-  var context = {};
-
-  Ember.run(() => {
-    stateManager = StateManager.create({
-      start: State.create({
-        goNext(manager, context) {
-          manager.transitionTo('next', context);
-        }
-      }),
-
-      next: State.create({
-        setup(manager, passedContext) {
-          assert.equal(context, passedContext, "The context is passed through");
-        }
-      })
-    });
-  });
-
-  stateManager.send('goNext', context);
-});
-
-test("if a context is passed to a transition and the path is to the current state, the state's setup event is triggered again", (assert) => {
-  assert.expect(2);
-  var counter = 0;
-
-  Ember.run(() => {
-    stateManager = StateManager.create({
-      start: State.create({
-        goNext(manager) {
-          counter++;
-          manager.transitionTo('foo.next', counter);
-        }
-      }),
-
-      foo: State.create({
-        next: State.create({
-          goNext(manager) {
-            counter++;
-            manager.transitionTo('next', counter);
-          },
-
-          setup(manager, context) {
-            assert.equal(context, counter, "The context is passed through");
-          }
-        })
-      })
-    });
-  });
-
-  stateManager.send('goNext', counter);
-  stateManager.send('goNext', counter);
-});
-
-test("if no context is provided, setup is triggered with an undefined context", (assert) => {
+test("setup is triggered", (assert) => {
   assert.expect(1);
 
   Ember.run(function() {
@@ -622,8 +567,8 @@ test("if no context is provided, setup is triggered with an undefined context", 
         },
 
         next: State.create({
-          setup(manager, context) {
-            assert.equal(context, undefined, "setup is called with no context");
+          setup() {
+            assert.ok("setup is called");
           }
         })
       })
@@ -631,70 +576,6 @@ test("if no context is provided, setup is triggered with an undefined context", 
   });
 
   stateManager.send('goNext');
-});
-
-test("multiple contexts can be provided in a single transitionTo", (assert) => {
-  assert.expect(2);
-
-  Ember.run(() => {
-    stateManager = StateManager.create({
-      start: State.create(),
-
-      planters: State.create({
-        setup(manager, context) {
-          assert.deepEqual(context, { company: true });
-        },
-
-        nuts: State.create({
-          setup(manager, context) {
-            assert.deepEqual(context, { product: true });
-          }
-        })
-      })
-    });
-  });
-
-  stateManager.transitionTo('planters.nuts', { company: true }, { product: true });
-});
-
-test("multiple contexts only apply to states that need them", (assert) => {
-  assert.expect(4);
-
-  Ember.run(() => {
-    stateManager = StateManager.create({
-      start: State.create(),
-
-      parent: State.create({
-        hasContext: false,
-
-        setup(manager, context) {
-          assert.equal(context, undefined);
-        },
-
-        child: State.create({
-          setup(manager, context) {
-            assert.equal(context, 'one');
-          },
-
-          grandchild: State.create({
-            initialState: 'greatGrandchild',
-
-            setup(manager, context) {
-              assert.equal(context, 'two');
-            },
-
-            greatGrandchild: State.create({
-              setup(manager, context) {
-                assert.equal(context, undefined);
-              }
-            })
-          })
-        })
-      })
-    });
-  });
-
-  stateManager.transitionTo('parent.child.grandchild', 'one', 'two');
 });
 
 test("transitionEvent is called for each nested state", (assert) => {
@@ -734,50 +615,6 @@ test("transitionEvent is called for each nested state", (assert) => {
   calledOnChild = false;
 
   stateManager.transitionTo('planters.nuts');
-
-  assert.ok(calledOnParent, 'called transitionEvent on parent');
-  assert.ok(calledOnChild, 'called transitionEvent on child');
-});
-
-test("transitionEvent is called for each nested state with context", (assert) => {
-  assert.expect(8);
-
-  var calledOnParent = false,
-      calledOnChild = true;
-
-  Ember.run(function() {
-    stateManager = StateManager.create({
-      start: State.create(),
-
-      planters: State.create({
-        setup(manager, context) {
-          calledOnParent = true;
-          assert.ok(!context, 'single context is not called on parent');
-        },
-
-        nuts: State.create({
-          setup(manager, context) {
-            calledOnChild = true;
-            assert.equal(context, 'context', 'child gets context');
-          }
-        })
-      })
-    });
-  });
-
-  stateManager.transitionTo('planters.nuts', 'context');
-
-  assert.ok(calledOnParent, 'called transitionEvent on parent');
-  assert.ok(calledOnChild, 'called transitionEvent on child');
-
-  // repeat the test now that the path is cached
-
-  stateManager.transitionTo('start');
-
-  calledOnParent = false;
-  calledOnChild = false;
-
-  stateManager.transitionTo('planters.nuts', 'context');
 
   assert.ok(calledOnParent, 'called transitionEvent on parent');
   assert.ok(calledOnChild, 'called transitionEvent on child');

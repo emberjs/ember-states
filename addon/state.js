@@ -78,7 +78,6 @@ var State = Ember.Object.extend(Ember.Evented,
     @type State
   */
   parentState: null,
-  start: null,
 
   /**
     The name of this state.
@@ -272,15 +271,6 @@ var State = Ember.Object.extend(Ember.Evented,
   }),
 
   /**
-    A boolean value indicating whether the state takes a context.
-    By default we assume all states take contexts.
-
-    @property hasContext
-    @default true
-  */
-  hasContext: true,
-
-  /**
     This is the default transition event.
 
     @event setup
@@ -288,7 +278,6 @@ var State = Ember.Object.extend(Ember.Evented,
     @param context
     @see StateManager#transitionEvent
   */
-  setup() {},
 
   /**
     This event fires when the state is entered.
@@ -296,7 +285,6 @@ var State = Ember.Object.extend(Ember.Evented,
     @event enter
     @param {StateManager} manager
   */
-  enter() {},
 
   /**
     This event fires when the state is exited.
@@ -304,7 +292,6 @@ var State = Ember.Object.extend(Ember.Evented,
     @event exit
     @param {StateManager} manager
   */
-  exit() {}
 });
 
 State.reopenClass({

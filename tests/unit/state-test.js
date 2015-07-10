@@ -205,170 +205,19 @@ test("propagates its container to its child states", (assert) => {
   assert.equal(second.container, container, 'container should be given to a `extend`ed child state after creation');
 });
 
-function Event(contexts) {
-  if (contexts) {
-    this.contexts = contexts;
-  }
-}
-
-var _$;
-
-module("State.transitionTo", {
-  setup() {
-    _$ = Ember.$;
-    Ember.$ = { Event };
-  },
-  teardown() {
-    Ember.$ = _$;
-  }
-});
+module("State.transitionTo");
 
 test("sets the transition target", (assert) => {
-  var receivedTarget,
-      receivedContext,
-      stateManager,
-      transitionFunction;
-
-  stateManager = {
-    transitionTo(target, context) {
+  let receivedTarget;
+  let stateManager = {
+    transitionTo(target) {
       receivedTarget = target;
-      receivedContext = context;
     }
   };
 
-  transitionFunction = State.transitionTo('targetState');
-
-  transitionFunction(stateManager, new Event());
-
-  assert.equal(receivedTarget, 'targetState');
-  assert.ok(!receivedContext, "does not pass a context when given an event without context");
-});
-
-test("passes no context arguments when there are no contexts", (assert) => {
-  var contextArgsCount,
-      stateManager,
-      transitionFunction,
-      event;
-
-  event = new Event([]);
-
-  stateManager = {
-    transitionTo() {
-      contextArgsCount = [].slice.call(arguments, 1).length;
-    }
-  };
-
-  transitionFunction = State.transitionTo('targetState');
-
-  transitionFunction(stateManager, event);
-
-  assert.equal( contextArgsCount, 0);
-});
-
-test("passes through a single context", (assert) => {
-  var receivedContext,
-      stateManager,
-      transitionFunction,
-      event;
-
-  event = new Event([{ value: 'context value' }]);
-
-  stateManager = {
-    transitionTo(target, context) {
-      receivedContext = context;
-    }
-  };
-
-  transitionFunction = State.transitionTo('targetState');
-
-  transitionFunction(stateManager, event);
-
-  assert.equal( receivedContext, event.contexts[0]);
-});
-
-test("passes through multiple contexts as additional arguments", (assert) => {
-  var receivedContexts,
-      stateManager,
-      transitionFunction,
-      event;
-
-  event = new Event([ { value: 'context1' }, { value: 'context2' } ]);
-
-  stateManager = {
-    transitionTo() {
-      receivedContexts = [].slice.call(arguments, 1);
-    }
-  };
-
-  transitionFunction = State.transitionTo('targetState');
-
-  transitionFunction(stateManager, event);
-
-  assert.deepEqual( receivedContexts, event.contexts);
-});
-
-test("does not mutate the event contexts value", (assert) => {
-  var receivedContexts,
-      stateManager,
-      transitionFunction,
-      originalContext,
-      event;
-
-  originalContext = [ { value: 'context1' }, { value: 'context2' } ];
-
-  event = new Event(originalContext.slice());
-
-  stateManager = {
-    transitionTo() {
-      receivedContexts = [].slice.call(arguments, 1);
-    }
-  };
-
-  transitionFunction = State.transitionTo('targetState');
-
-  transitionFunction(stateManager, event);
-
-  assert.deepEqual(event.contexts, originalContext);
-});
-
-test("passes no context arguments when called with no context or event", (assert) => {
-  var receivedContexts,
-      stateManager,
-      transitionFunction;
-
-  stateManager = {
-    transitionTo() {
-      receivedContexts = [].slice.call(arguments, 1);
-    }
-  };
-
-  transitionFunction = State.transitionTo('targetState');
+  let transitionFunction = State.transitionTo('targetState');
 
   transitionFunction(stateManager);
 
-  assert.equal( receivedContexts.length, 0, "transitionTo receives no context");
-});
-
-test("handles contexts without an event", (assert) => {
-  var receivedContexts,
-      stateManager,
-      transitionFunction,
-      context1,
-      context2;
-
-  context1 = { value: 'context1', contexts: 'I am not an event'};
-  context2 = { value: 'context2', contexts: ''};
-
-  stateManager = {
-    transitionTo() {
-      receivedContexts = [].slice.call(arguments, 1);
-    }
-  };
-
-  transitionFunction = State.transitionTo('targetState');
-
-  transitionFunction(stateManager, context1, context2);
-
-  assert.equal( receivedContexts[0], context1, "the first context is passed through" );
-  assert.equal( receivedContexts[1], context2, "the second context is passed through" );
+  assert.equal(receivedTarget, 'targetState');
 });
