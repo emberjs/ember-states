@@ -690,7 +690,7 @@ export default State.extend({
     let hash = this.contextFreeTransition(currentState, path);
 
     // Next, process the raw state information for the contexts passed in.
-    let transition = new Transition(hash).normalize(this);
+    let transition = new Transition(hash);
 
     this.enterState(transition);
     this.triggerSetupContext(transition);

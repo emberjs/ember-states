@@ -133,9 +133,8 @@ var State = Ember.Object.extend(Ember.Evented,
   init() {
     var states = get(this, 'states');
     set(this, 'childStates', Ember.A());
-    set(this, 'eventTransitions', get(this, 'eventTransitions') || {});
 
-    var name, value, transitionTarget;
+    var name, value;
 
     // As a convenience, loop over the properties
     // of this state and look for any that are other
@@ -150,10 +149,6 @@ var State = Ember.Object.extend(Ember.Evented,
         if (name === "constructor") { continue; }
 
         if (value = this[name]) {
-          if (transitionTarget = value.transitionTarget) {
-            this.eventTransitions[name] = transitionTarget;
-          }
-
           this.setupChild(states, name, value);
         }
       }
@@ -239,23 +234,6 @@ var State = Ember.Object.extend(Ember.Evented,
       states[name] = instance;
       return instance;
     }
-  },
-
-  /**
-    @private
-
-    @method lookupEventTransition
-    @param name
-  */
-  lookupEventTransition(name) {
-    var path, state = this;
-
-    while(state && !path) {
-      path = state.eventTransitions[name];
-      state = state.get('parentState');
-    }
-
-    return path;
   },
 
   /**
